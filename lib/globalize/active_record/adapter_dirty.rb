@@ -17,7 +17,9 @@ module Globalize
           end
         elsif !is_changed
           # If there's not a change yet, record it.
-          record.send(:attribute_will_change!, name) if old_value != value
+          ActiveSupport::Deprecation.silence do
+            record.send(:attribute_will_change!, name) if old_value != value
+          end
         end
 
         super locale, name, value
